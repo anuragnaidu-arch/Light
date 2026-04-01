@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SensiX Pro - Sensitivity Calculator</title>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.95)),
+    url("https://images.unsplash.com/photo-1511512578047-dfb367046420");
+    background-size: cover;
+    background-position:center;
+    color:white;
+}
+
+/* Container */
+.container{
+    max-width:420px;
+    margin:auto;
+    padding:20px;
+}
+
+/* Header */
+.header{
+    text-align:center;
+}
+
+.header img{
+    width:100%;
+    border-radius:12px;
+    box-shadow:0 0 20px red;
+    margin-bottom:10px;
+}
+
+.header h1{
+    font-size:24px;
+}
+
+/* Card */
+.card{
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(12px);
+    border-radius:12px;
+    padding:15px;
+    margin-top:15px;
+    transition:0.3s;
+}
+
+.card:hover{
+    transform: translateY(-5px);
+}
+
+/* Inputs */
+select,button{
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+    border:none;
+    border-radius:10px;
+    font-size:15px;
+}
+
+select{
+    background:#020617;
+    color:white;
+}
+
+button{
+    background: linear-gradient(90deg,#38bdf8,#0ea5e9);
+    font-weight:bold;
+    cursor:pointer;
+    box-shadow:0 0 10px #38bdf8;
+}
+
+button:hover{
+    transform:scale(1.05);
+}
+
+/* Result */
+.result p{
+    margin:5px 0;
+}
+
+/* Tips */
+.tips li{
+    margin:6px 0;
+}
+
+/* Footer */
+.footer{
+    text-align:center;
+    margin-top:20px;
+    font-size:13px;
+    opacity:0.7;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- Header -->
+<div class="header">
+    <img src="https://images.unsplash.com/photo-1605902711622-cfb43c4437b5">
+    <h1>🔥 SensiX Pro</h1>
+    <p>RAM + DPI Sensitivity Calculator 🎯</p>
+</div>
+
+<!-- Calculator -->
+<div class="card">
+    <h3><i class="fa-solid fa-sliders"></i> Select Device</h3>
+
+    <select id="ram">
+        <option value="">Select RAM</option>
+        <option value="2">2GB</option>
+        <option value="3">3GB</option>
+        <option value="4">4GB</option>
+        <option value="6">6GB+</option>
+    </select>
+
+    <select id="dpi">
+        <option value="">Select DPI</option>
+        <option value="400">400 DPI</option>
+        <option value="450">450 DPI</option>
+        <option value="500">500 DPI</option>
+        <option value="600">600 DPI</option>
+    </select>
+
+    <button onclick="calculate()">🎯 Get Sensitivity</button>
+
+    <div id="result" class="result"></div>
+</div>
+
+<!-- Pro Tips -->
+<div class="card">
+    <h3>🎮 Pro Headshot Tips</h3>
+    <ul class="tips">
+        <li>✔ Keep General sensitivity high for fast aim</li>
+        <li>✔ Drag aim slightly upward for headshots</li>
+        <li>✔ Use Red Dot for close range fights</li>
+        <li>✔ Practice daily in training ground</li>
+        <li>✔ Use 2 or 3 finger controls</li>
+    </ul>
+</div>
+
+<!-- Info Section -->
+<div class="card">
+    <h3>📊 About Sensitivity</h3>
+    <p>
+        Sensitivity settings depend on your device RAM and DPI. Higher DPI increases speed, while higher RAM allows smoother gameplay. Adjusting both correctly helps achieve accurate headshots and better control.
+    </p>
+</div>
+
+<div class="footer">
+    © 2026 SensiX Pro | Gaming Tool 🔥
+</div>
+
+</div>
+
+<script>
+function calculate(){
+    let ram = document.getElementById("ram").value;
+    let dpi = document.getElementById("dpi").value;
+
+    if(!ram || !dpi){
+        alert("Select RAM and DPI");
+        return;
+    }
+
+    let base = {
+        "2": 80,
+        "3": 85,
+        "4": 90,
+        "6": 95
+    };
+
+    let boost = dpi / 100;
+    let b = base[ram];
+
+    let general = Math.min(100, b + boost);
+    let redDot = Math.min(100, general - 5);
+    let scope2x = Math.min(100, b - 10);
+    let scope4x = Math.min(100, b - 20);
+    let awm = Math.min(100, b - 25);
+
+    document.getElementById("result").innerHTML = `
+        <div class="card">
+            <h3>🔥 Best Settings</h3>
+            <p>🎯 General: ${general}</p>
+            <p>🔴 Red Dot: ${redDot}</p>
+            <p>🔍 2x Scope: ${scope2x}</p>
+            <p>🎯 4x Scope: ${scope4x}</p>
+            <p>🎯 AWM Scope: ${awm}</p>
+        </div>
+    `;
+}
+</script>
+
+</body>
+</html>
